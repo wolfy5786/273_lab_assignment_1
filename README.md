@@ -1,26 +1,29 @@
-# CMPE 273 – Week 1 Lab 1: Your First Distributed System (Starter)
+# CMPE 273 – Week 1 Lab 1:
 
-This starter provides two implementation tracks:
-- `python-http/` (Flask + requests)
-- `go-http/` (net/http)
+## Submission
 
-Pick **one** track for Week 1.
+### GitHub Repository
+[Add your repository link here]
 
-## Lab Goal
-Build **two services** that communicate over the network:
-- **Service A** (port 8080): `/health`, `/echo?msg=...`
-- **Service B** (port 8081): `/health`, `/call-echo?msg=...` calls Service A
+### Running Instructions
+Detailed instructions to run this project can be found in `python-http/README.md`
 
-Minimum requirements:
-- Two independent processes
-- HTTP (or gRPC if you choose stretch)
-- Basic logging per request (service name, endpoint, status, latency)
-- Timeout handling in Service B
-- Demonstrate independent failure (stop A; B returns 503 and logs error)
+### Output Screenshots
 
-## Deliverables
-1. Repo link
-2. README updates:
-   - how to run locally
-   - success + failure proof (curl output or screenshot)
-   - 1 short paragraph: “What makes this distributed?”
+#### Success Case
+1
+![alt text](image.png)
+2
+![alt text](image-1.png)
+3
+![alt text](image-2.png)
+
+#### Failure Case
+1
+![alt text](image-3.png)
+2
+![alt text](image-4.png)
+
+### What Makes This Distributed?
+There are two services running independently, failure in one one service does not cause failure in the other. Service A and Service B are separate processes/containers, each with their own runtime environment and they communicate over HTTP. Additionally both containers need not been on the same physical machine, they can run seperately.
+---

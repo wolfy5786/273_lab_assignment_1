@@ -17,7 +17,7 @@ This project consists of two services:
 
 ### 1. Build the Services
 
-In the root directory of the project, run the following command to build all services from scratch:
+In the python-http directory of the project, run the following command to build all services from scratch:
 
 ```bash
 docker-compose build --no-cache

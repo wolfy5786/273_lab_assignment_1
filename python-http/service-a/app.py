@@ -34,13 +34,10 @@ def echo():
     if r < 0.4:
         log.info("service A, method = /echo, intentionally causing timeout")
         time.sleep(2.0)   
-    elif r < 0.5:
-        log.info("service A, method = /echo, intentionally causing causing delay")
-        time.sleep(0.7)
 
     #============================log responce==============================================
     log.info(f'service=A endpoint=/echo status=ok latency_ms={int((time.time()-start)*1000)}')
     return jsonify(resp)
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=8080)
+    app.run(host="0.0.0.0", port=8080)

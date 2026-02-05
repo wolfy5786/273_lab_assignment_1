@@ -16,7 +16,7 @@ log = structlog.get_logger()
 
 app = Flask(__name__)
 
-SERVICE_A = "http://127.0.0.1:8080"
+SERVICE_A = "http://service-a:8080"
 
 
 #==========================Retry logic=============================
@@ -79,6 +79,13 @@ def call_echo():
             service_b="bad request",
             service_a="available",
             error=str(re))   ,   503
+    except Exception as e:
+        #------------------------------log exception--------------------------------------
+        log.exception(f'service=B endpoint=/call-echo status=exception raised, error="{str(e)}" latency_ms={int((time.time()-start)*1000)}')
+        return jsonify(
+            service_b="working",
+            service_a="not available",
+            error=str(e))   ,   503
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=8081)
+    app.run(host="0.0.0.0", port=8081)

@@ -10,7 +10,7 @@ services:
       - app-network
     restart: unless-stopped
 
-  serviceb:
+  service-b:
     build:
       context: .                # Project root
       dockerfile: service-b/Dockerfile
@@ -19,10 +19,21 @@ services:
       - "8081:8081"
     networks:
       - app-network
-    depends_on:
-      - service-a
+    # depends_on:           intentionally removing to dependency for test
+    #   - service-a
     restart: unless-stopped
+
+  test:
+    build:
+      context: .
+      dockerfile: testing/Dockerfile
+    container_name: test
+    networks:
+      - app-network
+    # depends_on:
+    #   - service-b
 
 networks:
   app-network:
     driver: bridge
+

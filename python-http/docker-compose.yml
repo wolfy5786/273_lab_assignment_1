@@ -1,0 +1,28 @@
+services:
+  service-a:
+    build:
+      context: .                # Project root
+      dockerfile: service-a/Dockerfile
+    container_name: service-a
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  serviceb:
+    build:
+      context: .                # Project root
+      dockerfile: service-b/Dockerfile
+    container_name: service-b
+    ports:
+      - "8081:8081"
+    networks:
+      - app-network
+    depends_on:
+      - service-a
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 import time
 import structlog
 from utils import logging as logger
@@ -19,6 +19,7 @@ def health():
 
 @app.get("/echo")
 def echo():
+    """endpoint echo, params : ?msg msg==error for 400 error"""
     #=============================start the clock===================================
     start = time.time()
     #=============================fetch the params==================================
@@ -26,13 +27,17 @@ def echo():
     
     resp = {"echo": msg}
     #============================intentionally adding delay randomly======================
+    if msg=="error":
+        abort(400, description="Bad request (intentional)")
+
     r = random.random()
     if r < 0.4:
-        log.info("intentionally causing timeout")
+        log.info("service A, method = /echo, intentionally causing timeout")
         time.sleep(2.0)   
-    elif r < 0.6:
-        log.info("intentionally causing causing delay")
-        time.sleep(0.7) 
+    elif r < 0.5:
+        log.info("service A, method = /echo, intentionally causing causing delay")
+        time.sleep(0.7)
+
     #============================log responce==============================================
     log.info(f'service=A endpoint=/echo status=ok latency_ms={int((time.time()-start)*1000)}')
     return jsonify(resp)
